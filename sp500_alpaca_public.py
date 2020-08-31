@@ -295,7 +295,7 @@ def getstocklist():
     df = table[0]
     df.to_csv('S&P500-Info.csv')
     df.to_csv("S&P500-Symbols.csv", columns=['Symbol'])
-    df['Symbol']
+    
 
     for i in assets:
 
