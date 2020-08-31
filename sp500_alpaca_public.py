@@ -367,27 +367,27 @@ while True:
         buy_list= rank_list['stock'].tolist()
 
 
-        positions=api.list_positions()
-
-        for i in positions:
-            if i.symbol not in buy_list:
-                orderpercent( i["symbol"], 0) # sell stocks not in buy_list
+        existing_positions = api.list_positions()
+        for position in existing_positions:
+            if position.symbol not in buy_list:
+                orderpercent( position.symbol, 0) # sell stocks not in buy_list
+               
 
         for i in buy_list:
                     orderpercent( i,  (1.0 / 30) ) # order equal weight of each stock
 
         # record portfolio
-        portfolio = [arrow.now('US/Eastern').date(),get_portfolio_value(), api.list_positions() ]
+        portfolio = [arrow.now('US/Eastern').date(),get_portfolio_value(), buy_list ]
         with open(r'portfolio.csv', 'a') as f:
            writer = csv.writer(f, delimiter=',')
            writer.writerow(portfolio)
 
         #send slack notification
-        message= ( str(api.list_positions()))
+        message= ( str(portfolio))
         slack = Slacker(slack_token)
 
         slack.chat.post_message(channel='algos',
-                                    text=message, username= "Alpaca BOT", icon_emoji=':robot_face:')
+                                    text=message, username= "Alpaca Portfolio", icon_emoji=':robot_face:')
 
         time.sleep(25200) # sleep until mkt close
 
