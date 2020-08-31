@@ -3,17 +3,13 @@ import pandas as pd
 import arrow
 import talib
 import random
-import requests
-import json
 import time
-import keyring
 import datetime
 from datetime import date
 from datetime import datetime
 import pandas_market_calendars as mcal
 import math
 from math import floor
-import datetime as dt
 import csv
 import string
 import tenacity
@@ -22,7 +18,6 @@ from dateutil import parser
 from scipy import stats
 import alpaca_trade_api as tradeapi
 from iexfinance.stocks import Stock
-from iexfinance.stocks import get_historical_data
 from slacker import Slacker
 
 #FILL in passwords
@@ -41,8 +36,6 @@ def start():
     secret_key=alpaca_secret_key,
     base_url='https://paper-api.alpaca.markets', # remove this line to use live account
     api_version='v2')
-
-
 
     return api
 
